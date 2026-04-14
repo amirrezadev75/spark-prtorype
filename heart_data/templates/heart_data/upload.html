@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Dataset</title>
+</head>
+<body>
+    <h1>Upload Heart Disease Dataset</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+
+    <p><a href="{% url 'dataset_list' %}">See uploaded datasets</a></p>
+</body>
+</html>

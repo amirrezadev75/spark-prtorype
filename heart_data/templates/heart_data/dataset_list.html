@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dataset List</title>
+</head>
+<body>
+    <h1>Uploaded Datasets</h1>
+
+    <p><a href="{% url 'upload_dataset' %}">Upload new dataset</a></p>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Uploaded At</th>
+            <th>File</th>
+        </tr>
+        {% for ds in datasets %}
+        <tr>
+            <td>{{ ds.name }}</td>
+            <td>{{ ds.status }}</td>
+            <td>{{ ds.uploaded_at }}</td>
+            <td><a href="{{ ds.file.url }}">Open</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No datasets uploaded yet.</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
