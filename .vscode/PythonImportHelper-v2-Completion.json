@@ -24,6 +24,47 @@
         "documentation": {}
     },
     {
+        "label": "SparkSession",
+        "importPath": "pyspark.sql",
+        "description": "pyspark.sql",
+        "isExtraImport": true,
+        "detail": "pyspark.sql",
+        "documentation": {}
+    },
+    {
+        "label": "DataFrame",
+        "importPath": "pyspark.sql",
+        "description": "pyspark.sql",
+        "isExtraImport": true,
+        "detail": "pyspark.sql",
+        "documentation": {}
+    },
+    {
+        "label": "functions",
+        "importPath": "pyspark.sql",
+        "description": "pyspark.sql",
+        "isExtraImport": true,
+        "detail": "pyspark.sql",
+        "documentation": {}
+    },
+    {
+        "label": "DoubleType",
+        "importPath": "pyspark.sql.types",
+        "description": "pyspark.sql.types",
+        "isExtraImport": true,
+        "detail": "pyspark.sql.types",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
         "label": "admin",
         "importPath": "django.contrib",
         "description": "django.contrib",
@@ -85,6 +126,14 @@
         "description": "django.urls",
         "isExtraImport": true,
         "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "get_object_or_404",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
         "documentation": {}
     },
     {
@@ -163,6 +212,159 @@
         "documentation": {}
     },
     {
+        "label": "build_spark_session",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def build_spark_session() -> SparkSession:\n    return SparkSession.builder.appName(\"heart-pipeline-v2\").getOrCreate()\ndef load_data(spark: SparkSession, file_path: str) -> DataFrame:\n    return spark.read.csv(file_path, header=True, inferSchema=False)\ndef validate_required_columns(df: DataFrame) -> None:\n    missing = [col_name for col_name in REQUIRED_COLUMNS if col_name not in df.columns]\n    if missing:\n        raise ValueError(f\"Missing required columns: {missing}\")\ndef select_required_columns(df: DataFrame) -> DataFrame:\n    return df.select(*REQUIRED_COLUMNS)",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "load_data",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def load_data(spark: SparkSession, file_path: str) -> DataFrame:\n    return spark.read.csv(file_path, header=True, inferSchema=False)\ndef validate_required_columns(df: DataFrame) -> None:\n    missing = [col_name for col_name in REQUIRED_COLUMNS if col_name not in df.columns]\n    if missing:\n        raise ValueError(f\"Missing required columns: {missing}\")\ndef select_required_columns(df: DataFrame) -> DataFrame:\n    return df.select(*REQUIRED_COLUMNS)\ndef normalize_string_column(df: DataFrame, col_name: str) -> DataFrame:\n    return df.withColumn(col_name, F.lower(F.trim(F.col(col_name))))",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "validate_required_columns",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def validate_required_columns(df: DataFrame) -> None:\n    missing = [col_name for col_name in REQUIRED_COLUMNS if col_name not in df.columns]\n    if missing:\n        raise ValueError(f\"Missing required columns: {missing}\")\ndef select_required_columns(df: DataFrame) -> DataFrame:\n    return df.select(*REQUIRED_COLUMNS)\ndef normalize_string_column(df: DataFrame, col_name: str) -> DataFrame:\n    return df.withColumn(col_name, F.lower(F.trim(F.col(col_name))))\ndef clean_categorical_column(df: DataFrame, col_name: str, allowed_values: list[str]) -> DataFrame:\n    df = normalize_string_column(df, col_name)",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "select_required_columns",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def select_required_columns(df: DataFrame) -> DataFrame:\n    return df.select(*REQUIRED_COLUMNS)\ndef normalize_string_column(df: DataFrame, col_name: str) -> DataFrame:\n    return df.withColumn(col_name, F.lower(F.trim(F.col(col_name))))\ndef clean_categorical_column(df: DataFrame, col_name: str, allowed_values: list[str]) -> DataFrame:\n    df = normalize_string_column(df, col_name)\n    return df.withColumn(\n        col_name,\n        F.when(F.col(col_name).isin(allowed_values), F.col(col_name)).otherwise(F.lit(None))\n    )",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "normalize_string_column",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def normalize_string_column(df: DataFrame, col_name: str) -> DataFrame:\n    return df.withColumn(col_name, F.lower(F.trim(F.col(col_name))))\ndef clean_categorical_column(df: DataFrame, col_name: str, allowed_values: list[str]) -> DataFrame:\n    df = normalize_string_column(df, col_name)\n    return df.withColumn(\n        col_name,\n        F.when(F.col(col_name).isin(allowed_values), F.col(col_name)).otherwise(F.lit(None))\n    )\ndef clean_numeric_column(\n    df: DataFrame,",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "clean_categorical_column",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def clean_categorical_column(df: DataFrame, col_name: str, allowed_values: list[str]) -> DataFrame:\n    df = normalize_string_column(df, col_name)\n    return df.withColumn(\n        col_name,\n        F.when(F.col(col_name).isin(allowed_values), F.col(col_name)).otherwise(F.lit(None))\n    )\ndef clean_numeric_column(\n    df: DataFrame,\n    col_name: str,\n    min_value: float | None = None,",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "clean_numeric_column",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def clean_numeric_column(\n    df: DataFrame,\n    col_name: str,\n    min_value: float | None = None,\n    max_value: float | None = None,\n) -> DataFrame:\n    # Normalize obvious placeholder strings before casting\n    df = df.withColumn(col_name, F.trim(F.col(col_name)))\n    df = df.withColumn(\n        col_name,",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "clean_data",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def clean_data(df: DataFrame) -> DataFrame:\n    # Numeric columns\n    df = clean_numeric_column(df, \"Age\", min_value=0, max_value=120)\n    df = clean_numeric_column(df, \"Cholesterol Level\", min_value=0, max_value=1000)\n    df = clean_numeric_column(df, \"Blood Pressure\", min_value=0, max_value=400)\n    # Categorical columns\n    df = clean_categorical_column(df, \"Gender\", [\"male\", \"female\"])\n    df = clean_categorical_column(df, \"Smoking\", [\"yes\", \"no\"])\n    df = clean_categorical_column(df, \"Heart Disease Status\", [\"yes\", \"no\"])\n    # Create numeric target flag for analysis",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "count_nulls",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def count_nulls(df: DataFrame) -> DataFrame:\n    return df.select([\n        F.sum(F.col(c).isNull().cast(\"int\")).alias(c)\n        for c in df.columns\n    ])\ndef remove_outliers_iqr(df: DataFrame, col_name: str) -> DataFrame:\n    # Work only on non-null values for quartiles\n    q1, q3 = df.approxQuantile(col_name, [0.25, 0.75], 0.0)\n    iqr = q3 - q1\n    lower_bound = q1 - 1.5 * iqr",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "remove_outliers_iqr",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def remove_outliers_iqr(df: DataFrame, col_name: str) -> DataFrame:\n    # Work only on non-null values for quartiles\n    q1, q3 = df.approxQuantile(col_name, [0.25, 0.75], 0.0)\n    iqr = q3 - q1\n    lower_bound = q1 - 1.5 * iqr\n    upper_bound = q3 + 1.5 * iqr\n    return df.filter(\n        (F.col(col_name).isNull()) |\n        ((F.col(col_name) >= lower_bound) & (F.col(col_name) <= upper_bound))\n    )",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "descriptive_stats",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def descriptive_stats(df: DataFrame) -> dict:\n    total_rows = df.count()\n    stats = {\n        \"total_rows\": total_rows,\n        \"valid_age_rows\": df.filter(F.col(\"Age\").isNotNull()).count(),\n        \"valid_cholesterol_rows\": df.filter(F.col(\"Cholesterol Level\").isNotNull()).count(),\n        \"valid_bp_rows\": df.filter(F.col(\"Blood Pressure\").isNotNull()).count(),\n        \"heart_disease_yes_count\": df.filter(F.col(\"heart_disease_flag\") == 1).count(),\n        \"heart_disease_no_count\": df.filter(F.col(\"heart_disease_flag\") == 0).count(),\n    }",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "grouped_stats",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def grouped_stats(df: DataFrame) -> dict:\n    by_gender = (\n        df.groupBy(\"Gender\")\n        .agg(\n            F.count(\"*\").alias(\"row_count\"),\n            F.avg(\"Age\").alias(\"avg_age\"),\n            F.avg(\"Cholesterol Level\").alias(\"avg_cholesterol\"),\n            F.avg(\"heart_disease_flag\").alias(\"heart_disease_rate\"),\n        )\n        .orderBy(\"Gender\")",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "build_chart_data",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def build_chart_data(df: DataFrame) -> DataFrame:\n    # This is the data you can later send to frontend for scatter/regression plot\n    return df.select(\n        \"Age\",\n        \"Cholesterol Level\",\n        \"heart_disease_flag\"\n    ).filter(\n        F.col(\"Age\").isNotNull() &\n        F.col(\"Cholesterol Level\").isNotNull()\n    )",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "spark_df_to_dict_list",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def spark_df_to_dict_list(df):\n    return [row.asDict() for row in df.collect()]\ndef spark_single_row_to_dict(df):\n    rows = df.collect()\n    if not rows:\n        return {}\n    return rows[0].asDict()\ndef run_pipeline(file_path: str) -> dict:\n    spark = build_spark_session()\n    df = load_data(spark, file_path)",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "spark_single_row_to_dict",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def spark_single_row_to_dict(df):\n    rows = df.collect()\n    if not rows:\n        return {}\n    return rows[0].asDict()\ndef run_pipeline(file_path: str) -> dict:\n    spark = build_spark_session()\n    df = load_data(spark, file_path)\n    validate_required_columns(df)\n    df = select_required_columns(df)",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "run_pipeline",
+        "kind": 2,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "def run_pipeline(file_path: str) -> dict:\n    spark = build_spark_session()\n    df = load_data(spark, file_path)\n    validate_required_columns(df)\n    df = select_required_columns(df)\n    df = clean_data(df)\n    null_counts_df = count_nulls(df)\n    cleaned_df = df\n    analysis_df = cleaned_df\n    analysis_df = remove_outliers_iqr(analysis_df, \"Age\")",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
+        "label": "REQUIRED_COLUMNS",
+        "kind": 5,
+        "importPath": "heart_data.spark_jobs.analyze_heart_data",
+        "description": "heart_data.spark_jobs.analyze_heart_data",
+        "peekOfCode": "REQUIRED_COLUMNS = [\n    \"Age\",\n    \"Gender\",\n    \"Cholesterol Level\",\n    \"Smoking\",\n    \"Blood Pressure\",\n    \"Heart Disease Status\",\n]\ndef build_spark_session() -> SparkSession:\n    return SparkSession.builder.appName(\"heart-pipeline-v2\").getOrCreate()",
+        "detail": "heart_data.spark_jobs.analyze_heart_data",
+        "documentation": {}
+    },
+    {
         "label": "HeartDataConfig",
         "kind": 6,
         "importPath": "heart_data.apps",
@@ -194,7 +396,7 @@
         "kind": 5,
         "importPath": "heart_data.urls",
         "description": "heart_data.urls",
-        "peekOfCode": "urlpatterns = [\n    path(\"upload/\", views.upload_dataset, name=\"upload_dataset\"),\n    path(\"\", views.dataset_list, name=\"dataset_list\"),\n]",
+        "peekOfCode": "urlpatterns = [\n    path(\"upload/\", views.upload_dataset, name=\"upload_dataset\"),\n    path(\"\", views.dataset_list, name=\"dataset_list\"),\n    path(\"dataset/<int:pk>/\", views.dataset_detail, name=\"dataset_detail\"),\n]",
         "detail": "heart_data.urls",
         "documentation": {}
     },
@@ -212,7 +414,16 @@
         "kind": 2,
         "importPath": "heart_data.views",
         "description": "heart_data.views",
-        "peekOfCode": "def dataset_list(request):\n    datasets = DatasetUpload.objects.order_by(\"-uploaded_at\")\n    return render(request, \"heart_data/dataset_list.html\", {\"datasets\": datasets})",
+        "peekOfCode": "def dataset_list(request):\n    datasets = DatasetUpload.objects.order_by(\"-uploaded_at\")\n    return render(request, \"heart_data/dataset_list.html\", {\"datasets\": datasets})\ndef dataset_detail(request, pk):\n    dataset = get_object_or_404(DatasetUpload, pk=pk)\n    analysis_results = None\n    error_message = None\n    try:\n        file_path = dataset.file.path\n        results = run_pipeline(file_path)",
+        "detail": "heart_data.views",
+        "documentation": {}
+    },
+    {
+        "label": "dataset_detail",
+        "kind": 2,
+        "importPath": "heart_data.views",
+        "description": "heart_data.views",
+        "peekOfCode": "def dataset_detail(request, pk):\n    dataset = get_object_or_404(DatasetUpload, pk=pk)\n    analysis_results = None\n    error_message = None\n    try:\n        file_path = dataset.file.path\n        results = run_pipeline(file_path)\n        # normalize keys for template friendliness\n        def normalize_list(rows):\n            return [",
         "detail": "heart_data.views",
         "documentation": {}
     },

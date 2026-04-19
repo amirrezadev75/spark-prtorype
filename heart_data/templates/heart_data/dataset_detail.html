@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dataset Analysis</title>
+</head>
+<body>
+
+<h1>{{ dataset.name }}</h1>
+
+<p><a href="{% url 'dataset_list' %}">← Back</a></p>
+
+{% if error_message %}
+    <h2>Error</h2>
+    <p>{{ error_message }}</p>
+{% endif %}
+
+{% if analysis_results %}
+
+<h2>Summary</h2>
+<table border="1" cellpadding="8">
+<tr>
+    <th>Total</th>
+    <th>Valid Age</th>
+    <th>Valid Cholesterol</th>
+    <th>Valid BP</th>
+</tr>
+<tr>
+    <td>{{ analysis_results.summary.total_rows }}</td>
+    <td>{{ analysis_results.summary.valid_age_rows }}</td>
+    <td>{{ analysis_results.summary.valid_cholesterol_rows }}</td>
+    <td>{{ analysis_results.summary.valid_bp_rows }}</td>
+</tr>
+</table>
+
+
+<h2>Null Counts</h2>
+<table border="1" cellpadding="8">
+<tr>
+    <th>Age</th>
+    <th>Gender</th>
+    <th>Cholesterol</th>
+    <th>Smoking</th>
+    <th>BP</th>
+</tr>
+<tr>
+    <td>{{ analysis_results.null_counts.age }}</td>
+    <td>{{ analysis_results.null_counts.gender }}</td>
+    <td>{{ analysis_results.null_counts.cholesterol_level }}</td>
+    <td>{{ analysis_results.null_counts.smoking }}</td>
+    <td>{{ analysis_results.null_counts.blood_pressure }}</td>
+</tr>
+</table>
+
+
+<h2>By Gender</h2>
+<table border="1" cellpadding="8">
+<tr>
+    <th>Gender</th>
+    <th>Rows</th>
+    <th>Avg Age</th>
+    <th>Avg Cholesterol</th>
+</tr>
+{% for row in analysis_results.by_gender %}
+<tr>
+    <td>{{ row.gender }}</td>
+    <td>{{ row.row_count }}</td>
+    <td>{{ row.avg_age }}</td>
+    <td>{{ row.avg_cholesterol }}</td>
+</tr>
+{% endfor %}
+</table>
+
+
+<h2>By Smoking</h2>
+<table border="1" cellpadding="8">
+<tr>
+    <th>Smoking</th>
+    <th>Rows</th>
+    <th>Avg Age</th>
+    <th>Avg Cholesterol</th>
+</tr>
+{% for row in analysis_results.by_smoking %}
+<tr>
+    <td>{{ row.smoking }}</td>
+    <td>{{ row.row_count }}</td>
+    <td>{{ row.avg_age }}</td>
+    <td>{{ row.avg_cholesterol }}</td>
+</tr>
+{% endfor %}
+</table>
+
+
+<h2>By Heart Disease</h2>
+<table border="1" cellpadding="8">
+<tr>
+    <th>Status</th>
+    <th>Rows</th>
+    <th>Avg Age</th>
+    <th>Avg Cholesterol</th>
+</tr>
+{% for row in analysis_results.by_heart_status %}
+<tr>
+    <td>{{ row.heart_disease_status }}</td>
+    <td>{{ row.row_count }}</td>
+    <td>{{ row.avg_age }}</td>
+    <td>{{ row.avg_cholesterol }}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endif %}
+
+</body>
+</html>

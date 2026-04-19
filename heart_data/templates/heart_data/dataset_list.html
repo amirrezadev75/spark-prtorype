@@ -21,10 +21,13 @@
             <td>{{ ds.status }}</td>
             <td>{{ ds.uploaded_at }}</td>
             <td><a href="{{ ds.file.url }}">Open</a></td>
+            <td>
+                <a href="{% url 'dataset_detail' ds.id %}">View Analysis</a>
+            </td>
         </tr>
         {% empty %}
         <tr>
-            <td colspan="4">No datasets uploaded yet.</td>
+            <td colspan="5">No datasets uploaded yet.</td>
         </tr>
         {% endfor %}
     </table>
